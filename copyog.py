@@ -10,10 +10,11 @@ def intro():
     
     Returns:
         student_name (str): The student's name.
+        student_id (str): The student's ID number.
     """
     student_id = input("Welcome to Lights Direction. Please enter your student ID: ")
     student_name = input("Please enter your name: ")
-    return student_name
+    return student_name, student_id
   
 
 
@@ -101,14 +102,11 @@ if __name__ == "__main__":
     #test_app()
 
     # Run actual application flow
-    student_name = intro()
-    print("Welcome " + student_name)
+    student_name, student_id = intro()
+    print("Welcome " + student_name + ". Your student ID is " + student_id)
     start_point, end_point = get_input_directions()
 
     if start_point is not None and end_point is not None:
         start_up_lights(start_point, end_point)
         # ending message
         print("Please follow the light path. Lights will turn off in 2 minutes")
-
- 
- 
