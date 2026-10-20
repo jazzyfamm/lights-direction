@@ -1,0 +1,12 @@
+site_name: Lights application
+
+theme:
+  name: material #Clean modern UI
+
+plugins:
+  - search # Adds search bar
+  - mkdocstrings: #Exracts docstrings from python app.
+      handlers:
+        python:
+          options:
+            docstring_style: google #Supports google
