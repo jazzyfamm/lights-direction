@@ -1,0 +1,62 @@
+import unittest
+from io import StringIO
+from contextlib import redirect_stdout
+from unittest.mock import patch
+import og as og
+
+
+class TestLightsApp(unittest.TestCase):
+
+
+    def test_intro(self): #testing intro
+        output = StringIO() #to output result 
+        with redirect_stdout(output):
+            with patch('builtins.input', side_effect=['12345', 'Team IT']): #12345 is the student ID and Team IT is the name
+                student_name = og.intro() #Team IT will be placed in the student name variable
+                self.assertEqual(student_name, 'Team IT') 
+
+    def test_get_input_directions_valid(self): #tests for valed inputs
+        output = StringIO()
+        with patch('builtins.input', side_effect=['TBE', 'AEB']): #TBE is start, AEB is end
+            with redirect_stdout(output): #redirects printing anything to terminal
+                start, end = og.get_input_directions() #places the inputs to the actual function
+
+            self.assertEqual(start, 'tbe')
+            self.assertEqual(end, 'aeb')
+            self.assertIn("Valid\nValid", output.getvalue()) #checks to see if output is what it should be
+
+    def test_get_input_directions_invalid_start(self): #tests for invalid input
+        with patch('builtins.input', side_effect=['LLB']): #LLB is not in the list
+            output = StringIO()
+            with redirect_stdout(output):
+                start, end = og.get_input_directions()
+
+            self.assertIsNone(start)
+            self.assertIsNone(end)
+            self.assertIn("Invalid", output.getvalue())
+
+    def test_get_input_directions_invalid_end(self): #test right first input, invalid 2nd input
+        with patch('builtins.input', side_effect=['tbe', 'LLB']): #LLB not on list
+            output = StringIO()
+            with redirect_stdout(output):
+                start, end = og.get_input_directions()
+
+            self.assertIsNone(start)
+            self.assertIsNone(end)
+            self.assertIn("Valid\nInvalid", output.getvalue())
+
+    def test_start_up_lights_tbe_to_aeb(self): #tests start up lights funciton. 
+        output = StringIO()
+        with redirect_stdout(output):
+            tbel, aebl, sebl = og.start_up_lights("tbe", "aeb")
+
+        self.assertTrue(tbel) #sets this variable to true
+        self.assertTrue(aebl) #sets this variable to true
+        self.assertFalse(sebl)
+        self.assertEqual(
+            output.getvalue(),
+            "Starting lights are on\nEnding lights are on\n"
+        )
+
+if __name__ == '__main__':
+    unittest.main()
