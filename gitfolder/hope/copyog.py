@@ -92,6 +92,9 @@ def start_up_lights(start_point, end_point):
         sebl = True
 
     return tbel, aebl, sebl
+
+def j_change():
+    print("Change made by Jairo to show in branch")
    
 
 
@@ -109,6 +112,9 @@ if __name__ == "__main__":
         start_up_lights(start_point, end_point)
         # ending message
         print("Please follow the light path. Lights will turn off in 2 minutes")
+
+    j_change()
+    
 
  
  
